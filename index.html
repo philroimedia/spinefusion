@@ -50,14 +50,22 @@
                 <h2>Stage 1: Initial Diagnosis and Decision-Making</h2>
                 <div class="stage-grid">
                     <div class="spine-visualization">
+                        <h3 class="visualization-title">Interactive Spine Model</h3>
                         <div class="spine-model" id="spine-model-1">
                             <!-- SVG spine model will be inserted here -->
                         </div>
                         <div class="controls">
-                            <button class="view-btn" data-view="front">Front View</button>
-                            <button class="view-btn" data-view="side">Side View</button>
-                            <button class="view-btn" data-view="problem">Show Problem Area</button>
+                            <button class="view-btn" data-view="front">
+                                <span class="btn-icon">↑</span> Anterior View
+                            </button>
+                            <button class="view-btn" data-view="side">
+                                <span class="btn-icon">→</span> Lateral View
+                            </button>
+                            <button class="view-btn" data-view="problem">
+                                <span class="btn-icon">🔍</span> Focus on L4-L5
+                            </button>
                         </div>
+                        <p class="viz-instructions">Use + and - buttons to zoom, or click directly on spine elements for details</p>
                     </div>
                     <div class="info-panel">
                         <h3>About This Stage</h3>

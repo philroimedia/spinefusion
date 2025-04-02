@@ -296,16 +296,19 @@ header {
     grid-column: 1;
     grid-row: 1 / span 2;
     background-color: #f8f9fa;
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9f0f7 100%);
     border-radius: var(--border-radius);
     padding: 1.5rem;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    min-height: 450px;
+    min-height: 500px;
     transition: var(--transition);
     box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.05);
     border: 1px solid #e5e5e5;
+    position: relative;
+    overflow: hidden;
 }
 
 .spine-visualization:hover {
@@ -314,38 +317,121 @@ header {
 
 .spine-model {
     width: 100%;
-    height: 350px;
+    height: 450px;
     display: flex;
     align-items: center;
     justify-content: center;
     margin-bottom: 1.5rem;
     position: relative;
     transition: var(--transition);
+    overflow: hidden;
 }
 
-.spine-model svg {
+.spine-svg {
     max-width: 100%;
     max-height: 100%;
     transition: var(--transition);
+    overflow: visible;
 }
 
+#spine-group {
+    transition: transform 0.8s cubic-bezier(0.165, 0.84, 0.44, 1);
+    transform-origin: center center;
+}
+
+/* Spine components */
+.vertebra, .disc {
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.vertebra:hover .vertebra-body, 
+.disc:hover .disc-body {
+    filter: brightness(1.1);
+}
+
+.vertebra-label, .region-label {
+    pointer-events: none;
+    transition: var(--transition);
+    opacity: 0.9;
+}
+
+.region-label {
+    font-weight: 600;
+    font-size: 14px;
+    fill: var(--primary-color);
+}
+
+.problem-indicator {
+    transition: all 0.5s ease;
+}
+
+.problem-indicator.hidden {
+    opacity: 0;
+    visibility: hidden;
+}
+
+/* Zoom controls */
+.zoom-controls {
+    cursor: pointer;
+}
+
+.zoom-button, .reset-button {
+    transition: var(--transition);
+}
+
+.zoom-button:hover circle, 
+.reset-button:hover rect {
+    fill: #f0f7ff;
+    stroke: var(--primary-color);
+    stroke-width: 2;
+}
+
+.zoom-button:hover path, 
+.reset-button:hover text {
+    stroke: var(--primary-color);
+    stroke-width: 2.5;
+    fill: var(--primary-color);
+}
+
+.zoom-button:active, 
+.reset-button:active {
+    transform: scale(0.95);
+}
+
+/* Controls */
 .controls {
     display: flex;
     gap: 0.8rem;
     flex-wrap: wrap;
     justify-content: center;
+    margin-top: 1rem;
 }
 
 .view-btn {
-    padding: 0.6rem 1.2rem;
+    padding: 0.7rem 1.3rem;
     background-color: #fff;
     border: 1px solid #ddd;
     border-radius: 4px;
     cursor: pointer;
     transition: var(--transition);
     font-weight: 500;
-    font-size: 0.9rem;
+    font-size: 0.95rem;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    position: relative;
+    overflow: hidden;
+}
+
+.view-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 100%;
+    background-color: rgba(0, 86, 179, 0.1);
+    transition: var(--transition);
+    z-index: 0;
 }
 
 .view-btn:hover {
@@ -355,11 +441,19 @@ header {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
+.view-btn:hover::before {
+    width: 100%;
+}
+
 .view-btn.active {
     background-color: var(--primary-color);
     color: white;
     border-color: var(--primary-color);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.view-btn.active::before {
+    display: none;
 }
 
 .view-btn:active {
@@ -593,6 +687,32 @@ footer {
     .team-member {
         width: 100%;
     }
+    
+    .spine-model {
+        height: 350px;
+    }
+    
+    .region-label {
+        font-size: 12px;
+    }
+    
+    .vertebra-label {
+        font-size: 10px;
+    }
+    
+    .view-btn {
+        padding: 0.6rem 1rem;
+        font-size: 0.85rem;
+    }
+    
+    .visualization-title {
+        font-size: 1.2rem;
+        width: 100%;
+    }
+    
+    .viz-instructions {
+        font-size: 0.8rem;
+    }
 }
 
 /* Accessibility */
@@ -620,4 +740,28 @@ footer {
         background-color: black;
         box-shadow: 0 0 0 4px rgba(0, 0, 0, 0.5);
     }
+}
+
+.visualization-title {
+    margin-bottom: 1rem;
+    text-align: center;
+    color: var(--primary-color);
+    font-size: 1.4rem;
+    border-bottom: 2px solid rgba(52, 152, 219, 0.3);
+    padding-bottom: 0.5rem;
+    width: 80%;
+}
+
+.viz-instructions {
+    margin-top: 1rem;
+    font-size: 0.85rem;
+    color: #666;
+    text-align: center;
+    font-style: italic;
+}
+
+.btn-icon {
+    display: inline-block;
+    margin-right: 5px;
+    font-size: 1.1rem;
 }

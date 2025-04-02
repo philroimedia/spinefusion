@@ -24,86 +24,485 @@ document.addEventListener('DOMContentLoaded', function() {
 function initializeSpineModel() {
     const spineModel = document.getElementById('spine-model-1');
     
+    // Clear any existing content
+    spineModel.innerHTML = '';
+    
     // Create SVG element
     const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
     svg.setAttribute('width', '100%');
     svg.setAttribute('height', '100%');
-    svg.setAttribute('viewBox', '0 0 200 400');
+    svg.setAttribute('viewBox', '0 0 300 600');
+    svg.setAttribute('class', 'spine-svg');
     
-    // Create a simplified spine model
+    // Add gradient definitions
+    const defs = document.createElementNS("http://www.w3.org/2000/svg", "defs");
+    
+    // Vertebra gradient
+    const vertebraGradient = document.createElementNS("http://www.w3.org/2000/svg", "linearGradient");
+    vertebraGradient.setAttribute('id', 'vertebraGradient');
+    vertebraGradient.setAttribute('x1', '0%');
+    vertebraGradient.setAttribute('y1', '0%');
+    vertebraGradient.setAttribute('x2', '100%');
+    vertebraGradient.setAttribute('y2', '100%');
+    
+    const stop1 = document.createElementNS("http://www.w3.org/2000/svg", "stop");
+    stop1.setAttribute('offset', '0%');
+    stop1.setAttribute('stop-color', '#e8e8e8');
+    
+    const stop2 = document.createElementNS("http://www.w3.org/2000/svg", "stop");
+    stop2.setAttribute('offset', '100%');
+    stop2.setAttribute('stop-color', '#c0c0c0');
+    
+    vertebraGradient.appendChild(stop1);
+    vertebraGradient.appendChild(stop2);
+    
+    // Disc gradient
+    const discGradient = document.createElementNS("http://www.w3.org/2000/svg", "linearGradient");
+    discGradient.setAttribute('id', 'discGradient');
+    discGradient.setAttribute('x1', '0%');
+    discGradient.setAttribute('y1', '0%');
+    discGradient.setAttribute('x2', '100%');
+    discGradient.setAttribute('y2', '100%');
+    
+    const discStop1 = document.createElementNS("http://www.w3.org/2000/svg", "stop");
+    discStop1.setAttribute('offset', '0%');
+    discStop1.setAttribute('stop-color', '#d6eaff');
+    
+    const discStop2 = document.createElementNS("http://www.w3.org/2000/svg", "stop");
+    discStop2.setAttribute('offset', '100%');
+    discStop2.setAttribute('stop-color', '#a1c4ff');
+    
+    discGradient.appendChild(discStop1);
+    discGradient.appendChild(discStop2);
+    
+    // Problem area gradient
+    const problemGradient = document.createElementNS("http://www.w3.org/2000/svg", "linearGradient");
+    problemGradient.setAttribute('id', 'problemGradient');
+    problemGradient.setAttribute('x1', '0%');
+    problemGradient.setAttribute('y1', '0%');
+    problemGradient.setAttribute('x2', '100%');
+    problemGradient.setAttribute('y2', '100%');
+    
+    const problemStop1 = document.createElementNS("http://www.w3.org/2000/svg", "stop");
+    problemStop1.setAttribute('offset', '0%');
+    problemStop1.setAttribute('stop-color', '#ffcccc');
+    
+    const problemStop2 = document.createElementNS("http://www.w3.org/2000/svg", "stop");
+    problemStop2.setAttribute('offset', '100%');
+    problemStop2.setAttribute('stop-color', '#ff9999');
+    
+    problemGradient.appendChild(problemStop1);
+    problemGradient.appendChild(problemStop2);
+    
+    // Problem disc gradient
+    const problemDiscGradient = document.createElementNS("http://www.w3.org/2000/svg", "linearGradient");
+    problemDiscGradient.setAttribute('id', 'problemDiscGradient');
+    problemDiscGradient.setAttribute('x1', '0%');
+    problemDiscGradient.setAttribute('y1', '0%');
+    problemDiscGradient.setAttribute('x2', '100%');
+    problemDiscGradient.setAttribute('y2', '100%');
+    
+    const problemDiscStop1 = document.createElementNS("http://www.w3.org/2000/svg", "stop");
+    problemDiscStop1.setAttribute('offset', '0%');
+    problemDiscStop1.setAttribute('stop-color', '#ff8080');
+    
+    const problemDiscStop2 = document.createElementNS("http://www.w3.org/2000/svg", "stop");
+    problemDiscStop2.setAttribute('offset', '100%');
+    problemDiscStop2.setAttribute('stop-color', '#ff5252');
+    
+    problemDiscGradient.appendChild(problemDiscStop1);
+    problemDiscGradient.appendChild(problemDiscStop2);
+    
+    defs.appendChild(vertebraGradient);
+    defs.appendChild(discGradient);
+    defs.appendChild(problemGradient);
+    defs.appendChild(problemDiscGradient);
+    svg.appendChild(defs);
+    
+    // Create a group for the spine elements
+    const spineGroup = document.createElementNS("http://www.w3.org/2000/svg", "g");
+    spineGroup.setAttribute('id', 'spine-group');
+    spineGroup.setAttribute('transform', 'translate(150, 50)');
+    
+    // Create groups for different regions of the spine
+    const cervicalGroup = document.createElementNS("http://www.w3.org/2000/svg", "g");
+    cervicalGroup.setAttribute('class', 'spine-region');
+    cervicalGroup.setAttribute('id', 'cervical-region');
+    
+    const thoracicGroup = document.createElementNS("http://www.w3.org/2000/svg", "g");
+    thoracicGroup.setAttribute('class', 'spine-region');
+    thoracicGroup.setAttribute('id', 'thoracic-region');
+    
+    const lumbarGroup = document.createElementNS("http://www.w3.org/2000/svg", "g");
+    lumbarGroup.setAttribute('class', 'spine-region');
+    lumbarGroup.setAttribute('id', 'lumbar-region');
+    
+    // Add region labels
+    const cervicalLabel = createSpineLabel(-120, 45, "Cervical Spine (C1-C7)", "region-label");
+    const thoracicLabel = createSpineLabel(-120, 200, "Thoracic Spine (T1-T12)", "region-label");
+    const lumbarLabel = createSpineLabel(-120, 420, "Lumbar Spine (L1-L5)", "region-label");
+    
+    cervicalGroup.appendChild(cervicalLabel);
+    thoracicGroup.appendChild(thoracicLabel);
+    lumbarGroup.appendChild(lumbarLabel);
+    
     // Cervical vertebrae (C1-C7)
     for (let i = 0; i < 7; i++) {
-        const vertebra = createVertebra(100, 30 + i * 20, 30, 10, '#e0e0e0');
-        svg.appendChild(vertebra);
+        const vertebraHeight = 14;
+        const vertebraWidth = i === 0 ? 32 : 38;  // C1 (Atlas) is different
+        const y = i * 25;
+        
+        // Create different shapes for C1 and C2
+        if (i === 0) {
+            // C1 (Atlas) - more oval
+            const atlas = createSpecialVertebra(0, y, vertebraWidth, vertebraHeight, 'url(#vertebraGradient)', 'C1 (Atlas)');
+            cervicalGroup.appendChild(atlas);
+        } else if (i === 1) {
+            // C2 (Axis) - with dens
+            const axis = createSpecialVertebra(0, y, vertebraWidth, vertebraHeight, 'url(#vertebraGradient)', 'C2 (Axis)');
+            // Add the dens projection
+            const dens = document.createElementNS("http://www.w3.org/2000/svg", "ellipse");
+            dens.setAttribute('cx', 0);
+            dens.setAttribute('cy', y - 8);
+            dens.setAttribute('rx', 6);
+            dens.setAttribute('ry', 4);
+            dens.setAttribute('fill', 'url(#vertebraGradient)');
+            dens.setAttribute('stroke', '#999');
+            dens.setAttribute('stroke-width', '1');
+            dens.setAttribute('class', 'vertebra-part');
+            cervicalGroup.appendChild(dens);
+            cervicalGroup.appendChild(axis);
+        } else {
+            // C3-C7
+            const vertebra = createDetailedVertebra(0, y, vertebraWidth, vertebraHeight, 'url(#vertebraGradient)', `C${i+1}`);
+            cervicalGroup.appendChild(vertebra);
+        }
+        
+        // Add disc below except for last cervical
+        if (i < 6) {
+            const disc = createDetailedDisc(0, y + 16, 30, 7, 'url(#discGradient)', `C${i+1}-C${i+2} Disc`);
+            cervicalGroup.appendChild(disc);
+        }
     }
     
     // Thoracic vertebrae (T1-T12)
     for (let i = 0; i < 12; i++) {
-        const vertebra = createVertebra(100, 170 + i * 15, 35, 12, '#e0e0e0');
-        svg.appendChild(vertebra);
+        const vertebraHeight = 16;
+        const vertebraWidth = 42;
+        const y = i * 27 + 175;  // Start position after cervical
+        
+        const vertebra = createDetailedVertebra(0, y, vertebraWidth, vertebraHeight, 'url(#vertebraGradient)', `T${i+1}`);
+        
+        // Add transverse processes that are more pronounced for thoracic
+        const leftProcess = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+        leftProcess.setAttribute('x', -vertebraWidth/2 - 10);
+        leftProcess.setAttribute('y', y - 3);
+        leftProcess.setAttribute('width', 10);
+        leftProcess.setAttribute('height', 6);
+        leftProcess.setAttribute('rx', 2);
+        leftProcess.setAttribute('ry', 2);
+        leftProcess.setAttribute('fill', 'url(#vertebraGradient)');
+        leftProcess.setAttribute('stroke', '#999');
+        leftProcess.setAttribute('stroke-width', '1');
+        leftProcess.setAttribute('class', 'vertebra-part');
+        
+        const rightProcess = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+        rightProcess.setAttribute('x', vertebraWidth/2);
+        rightProcess.setAttribute('y', y - 3);
+        rightProcess.setAttribute('width', 10);
+        rightProcess.setAttribute('height', 6);
+        rightProcess.setAttribute('rx', 2);
+        rightProcess.setAttribute('ry', 2);
+        rightProcess.setAttribute('fill', 'url(#vertebraGradient)');
+        rightProcess.setAttribute('stroke', '#999');
+        rightProcess.setAttribute('stroke-width', '1');
+        rightProcess.setAttribute('class', 'vertebra-part');
+        
+        thoracicGroup.appendChild(leftProcess);
+        thoracicGroup.appendChild(rightProcess);
+        thoracicGroup.appendChild(vertebra);
+        
+        // Add disc below except for last thoracic
+        if (i < 11) {
+            const disc = createDetailedDisc(0, y + 18, 34, 8, 'url(#discGradient)', `T${i+1}-T${i+2} Disc`);
+            thoracicGroup.appendChild(disc);
+        }
     }
     
-    // Lumbar vertebrae (L1-L5) - highlight L4-L5 as problem area
+    // Lumbar vertebrae (L1-L5)
     for (let i = 0; i < 5; i++) {
-        let color = '#e0e0e0';
-        if (i >= 3) {
-            color = '#ffcccc'; // Highlight L4-L5 as problem area
+        const vertebraHeight = 22;
+        const vertebraWidth = 52;
+        const y = i * 34 + 520;  // Start position after thoracic
+        
+        // L4-L5 is the problem area
+        const fillColor = i >= 3 ? 'url(#problemGradient)' : 'url(#vertebraGradient)';
+        const strokeWidth = i >= 3 ? 2 : 1;
+        const strokeColor = i >= 3 ? '#cc6666' : '#999';
+        
+        const vertebra = createDetailedVertebra(0, y, vertebraWidth, vertebraHeight, fillColor, `L${i+1}`);
+        vertebra.setAttribute('stroke', strokeColor);
+        vertebra.setAttribute('stroke-width', strokeWidth);
+        
+        // Add more pronounced transverse processes for lumbar
+        const leftProcess = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+        leftProcess.setAttribute('x', -vertebraWidth/2 - 15);
+        leftProcess.setAttribute('y', y - 4);
+        leftProcess.setAttribute('width', 15);
+        leftProcess.setAttribute('height', 8);
+        leftProcess.setAttribute('rx', 3);
+        leftProcess.setAttribute('ry', 3);
+        leftProcess.setAttribute('fill', fillColor);
+        leftProcess.setAttribute('stroke', strokeColor);
+        leftProcess.setAttribute('stroke-width', strokeWidth);
+        leftProcess.setAttribute('class', 'vertebra-part');
+        
+        const rightProcess = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+        rightProcess.setAttribute('x', vertebraWidth/2);
+        rightProcess.setAttribute('y', y - 4);
+        rightProcess.setAttribute('width', 15);
+        rightProcess.setAttribute('height', 8);
+        rightProcess.setAttribute('rx', 3);
+        rightProcess.setAttribute('ry', 3);
+        rightProcess.setAttribute('fill', fillColor);
+        rightProcess.setAttribute('stroke', strokeColor);
+        rightProcess.setAttribute('stroke-width', strokeWidth);
+        rightProcess.setAttribute('class', 'vertebra-part');
+        
+        lumbarGroup.appendChild(leftProcess);
+        lumbarGroup.appendChild(rightProcess);
+        lumbarGroup.appendChild(vertebra);
+        
+        // Add disc below except for last lumbar
+        if (i < 4) {
+            const discFill = i >= 3 ? 'url(#problemDiscGradient)' : 'url(#discGradient)';
+            const discStroke = i >= 3 ? '#cc6666' : '#999';
+            const discStrokeWidth = i >= 3 ? 2 : 1;
+            
+            const disc = createDetailedDisc(0, y + 22, 42, 10, discFill, `L${i+1}-L${i+2} Disc`);
+            disc.setAttribute('stroke', discStroke);
+            disc.setAttribute('stroke-width', discStrokeWidth);
+            
+            // Add a highlight for the problematic disc (L4-L5)
+            if (i === 3) {
+                const problemIndicator = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+                problemIndicator.setAttribute('cx', 70);
+                problemIndicator.setAttribute('cy', y + 22);
+                problemIndicator.setAttribute('r', 15);
+                problemIndicator.setAttribute('fill', 'none');
+                problemIndicator.setAttribute('stroke', '#ff0000');
+                problemIndicator.setAttribute('stroke-width', 2);
+                problemIndicator.setAttribute('stroke-dasharray', '5,3');
+                problemIndicator.setAttribute('class', 'problem-indicator hidden');
+                
+                const problemLine = document.createElementNS("http://www.w3.org/2000/svg", "line");
+                problemLine.setAttribute('x1', 42);
+                problemLine.setAttribute('y1', y + 22);
+                problemLine.setAttribute('x2', 60);
+                problemLine.setAttribute('y2', y + 22);
+                problemLine.setAttribute('stroke', '#ff0000');
+                problemLine.setAttribute('stroke-width', 2);
+                problemLine.setAttribute('class', 'problem-indicator hidden');
+                
+                // Add text label for problem area
+                const problemText = document.createElementNS("http://www.w3.org/2000/svg", "text");
+                problemText.setAttribute('x', 90);
+                problemText.setAttribute('y', y + 22);
+                problemText.setAttribute('text-anchor', 'start');
+                problemText.setAttribute('dominant-baseline', 'middle');
+                problemText.setAttribute('fill', '#ff0000');
+                problemText.setAttribute('font-weight', 'bold');
+                problemText.setAttribute('font-size', '14px');
+                problemText.setAttribute('class', 'problem-indicator hidden');
+                problemText.textContent = "Herniated Disc";
+                
+                lumbarGroup.appendChild(problemIndicator);
+                lumbarGroup.appendChild(problemLine);
+                lumbarGroup.appendChild(problemText);
+            }
+            
+            lumbarGroup.appendChild(disc);
         }
-        const vertebra = createVertebra(100, 350 + i * 20, 45, 15, color);
-        svg.appendChild(vertebra);
     }
     
-    // Add discs between vertebrae
-    for (let i = 0; i < 23; i++) {
-        let y = 0;
-        let width = 0;
-        
-        if (i < 6) {
-            // Cervical discs
-            y = 40 + i * 20;
-            width = 25;
-        } else if (i < 18) {
-            // Thoracic discs
-            y = 180 + (i - 6) * 15;
-            width = 30;
-        } else {
-            // Lumbar discs
-            y = 360 + (i - 18) * 20;
-            width = 40;
-            
-            // Highlight problematic disc
-            if (i >= 21) {
-                const disc = createDisc(100, y, width, 5, '#ff6666');
-                svg.appendChild(disc);
-                continue;
-            }
-        }
-        
-        const disc = createDisc(100, y, width, 5, '#b3d9ff');
-        svg.appendChild(disc);
-    }
+    // Add sacrum
+    const sacrum = document.createElementNS("http://www.w3.org/2000/svg", "path");
+    sacrum.setAttribute('d', 'M-26,690 C-26,665 26,665 26,690 L15,730 C15,735 -15,735 -15,730 Z');
+    sacrum.setAttribute('fill', 'url(#vertebraGradient)');
+    sacrum.setAttribute('stroke', '#999');
+    sacrum.setAttribute('stroke-width', '1');
+    
+    const sacrumLabel = createSpineLabel(0, 710, "Sacrum", "vertebra-label");
+    
+    lumbarGroup.appendChild(sacrum);
+    lumbarGroup.appendChild(sacrumLabel);
+    
+    // Add all regions to the spine group
+    spineGroup.appendChild(cervicalGroup);
+    spineGroup.appendChild(thoracicGroup);
+    spineGroup.appendChild(lumbarGroup);
+    
+    // Add the spine group to the SVG
+    svg.appendChild(spineGroup);
+    
+    // Add zoom controls
+    const zoomControls = document.createElementNS("http://www.w3.org/2000/svg", "g");
+    zoomControls.setAttribute('class', 'zoom-controls');
+    zoomControls.setAttribute('transform', 'translate(270, 50)');
+    
+    const zoomIn = document.createElementNS("http://www.w3.org/2000/svg", "g");
+    zoomIn.setAttribute('class', 'zoom-button');
+    zoomIn.setAttribute('id', 'zoom-in');
+    
+    const zoomInCircle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+    zoomInCircle.setAttribute('cx', 0);
+    zoomInCircle.setAttribute('cy', 0);
+    zoomInCircle.setAttribute('r', 15);
+    zoomInCircle.setAttribute('fill', '#fff');
+    zoomInCircle.setAttribute('stroke', '#0056b3');
+    zoomInCircle.setAttribute('stroke-width', '1.5');
+    
+    const zoomInPlus = document.createElementNS("http://www.w3.org/2000/svg", "path");
+    zoomInPlus.setAttribute('d', 'M-8,0 L8,0 M0,-8 L0,8');
+    zoomInPlus.setAttribute('stroke', '#0056b3');
+    zoomInPlus.setAttribute('stroke-width', '2');
+    zoomInPlus.setAttribute('stroke-linecap', 'round');
+    
+    zoomIn.appendChild(zoomInCircle);
+    zoomIn.appendChild(zoomInPlus);
+    
+    const zoomOut = document.createElementNS("http://www.w3.org/2000/svg", "g");
+    zoomOut.setAttribute('class', 'zoom-button');
+    zoomOut.setAttribute('id', 'zoom-out');
+    zoomOut.setAttribute('transform', 'translate(0, 40)');
+    
+    const zoomOutCircle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+    zoomOutCircle.setAttribute('cx', 0);
+    zoomOutCircle.setAttribute('cy', 0);
+    zoomOutCircle.setAttribute('r', 15);
+    zoomOutCircle.setAttribute('fill', '#fff');
+    zoomOutCircle.setAttribute('stroke', '#0056b3');
+    zoomOutCircle.setAttribute('stroke-width', '1.5');
+    
+    const zoomOutMinus = document.createElementNS("http://www.w3.org/2000/svg", "path");
+    zoomOutMinus.setAttribute('d', 'M-8,0 L8,0');
+    zoomOutMinus.setAttribute('stroke', '#0056b3');
+    zoomOutMinus.setAttribute('stroke-width', '2');
+    zoomOutMinus.setAttribute('stroke-linecap', 'round');
+    
+    zoomOut.appendChild(zoomOutCircle);
+    zoomOut.appendChild(zoomOutMinus);
+    
+    const resetZoom = document.createElementNS("http://www.w3.org/2000/svg", "g");
+    resetZoom.setAttribute('class', 'reset-button');
+    resetZoom.setAttribute('id', 'reset-zoom');
+    resetZoom.setAttribute('transform', 'translate(0, 80)');
+    
+    const resetRect = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+    resetRect.setAttribute('x', -25);
+    resetRect.setAttribute('y', -15);
+    resetRect.setAttribute('width', 50);
+    resetRect.setAttribute('height', 30);
+    resetRect.setAttribute('rx', 5);
+    resetRect.setAttribute('ry', 5);
+    resetRect.setAttribute('fill', '#fff');
+    resetRect.setAttribute('stroke', '#0056b3');
+    resetRect.setAttribute('stroke-width', '1.5');
+    
+    const resetText = document.createElementNS("http://www.w3.org/2000/svg", "text");
+    resetText.setAttribute('x', 0);
+    resetText.setAttribute('y', 5);
+    resetText.setAttribute('text-anchor', 'middle');
+    resetText.setAttribute('font-size', '12px');
+    resetText.setAttribute('fill', '#0056b3');
+    resetText.textContent = "Reset";
+    
+    resetZoom.appendChild(resetRect);
+    resetZoom.appendChild(resetText);
+    
+    zoomControls.appendChild(zoomIn);
+    zoomControls.appendChild(zoomOut);
+    zoomControls.appendChild(resetZoom);
+    
+    svg.appendChild(zoomControls);
     
     // Add the SVG to the spine model container
     spineModel.appendChild(svg);
+    
+    // Setup event listeners for zoom controls
+    setupZoomControls();
 }
 
-// Create a vertebra shape
-function createVertebra(x, y, width, height, fill) {
-    const vertebra = document.createElementNS("http://www.w3.org/2000/svg", "rect");
-    vertebra.setAttribute('x', x - width / 2);
-    vertebra.setAttribute('y', y - height / 2);
-    vertebra.setAttribute('width', width);
-    vertebra.setAttribute('height', height);
-    vertebra.setAttribute('rx', 3);
-    vertebra.setAttribute('ry', 3);
-    vertebra.setAttribute('fill', fill);
-    vertebra.setAttribute('stroke', '#999');
-    vertebra.setAttribute('stroke-width', '1');
-    return vertebra;
+// Create a detailed vertebra shape
+function createDetailedVertebra(x, y, width, height, fill, label) {
+    const vertebraGroup = document.createElementNS("http://www.w3.org/2000/svg", "g");
+    vertebraGroup.setAttribute('class', 'vertebra');
+    vertebraGroup.setAttribute('data-label', label);
+    
+    // Vertebral body
+    const body = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+    body.setAttribute('x', x - width / 2);
+    body.setAttribute('y', y - height / 2);
+    body.setAttribute('width', width);
+    body.setAttribute('height', height);
+    body.setAttribute('rx', 5);
+    body.setAttribute('ry', 5);
+    body.setAttribute('fill', fill);
+    body.setAttribute('stroke', '#999');
+    body.setAttribute('stroke-width', '1');
+    body.setAttribute('class', 'vertebra-body');
+    
+    // Spinous process (pointing backward)
+    const spinousProcess = document.createElementNS("http://www.w3.org/2000/svg", "path");
+    spinousProcess.setAttribute('d', `M${x},${y-height/4} L${x+15},${y-height/4} L${x+15},${y+height/4} L${x},${y+height/4} Z`);
+    spinousProcess.setAttribute('fill', fill);
+    spinousProcess.setAttribute('stroke', '#999');
+    spinousProcess.setAttribute('stroke-width', '1');
+    spinousProcess.setAttribute('class', 'vertebra-process');
+    
+    // Add label
+    const textLabel = createSpineLabel(x - width/2 - 25, y, label, "vertebra-label");
+    
+    vertebraGroup.appendChild(body);
+    vertebraGroup.appendChild(spinousProcess);
+    vertebraGroup.appendChild(textLabel);
+    
+    return vertebraGroup;
 }
 
-// Create a disc shape
-function createDisc(x, y, width, height, fill) {
+// Create special vertebra shapes for C1 and C2
+function createSpecialVertebra(x, y, width, height, fill, label) {
+    const vertebraGroup = document.createElementNS("http://www.w3.org/2000/svg", "g");
+    vertebraGroup.setAttribute('class', 'vertebra');
+    vertebraGroup.setAttribute('data-label', label);
+    
+    // Vertebral body with special shape
+    const body = document.createElementNS("http://www.w3.org/2000/svg", "ellipse");
+    body.setAttribute('cx', x);
+    body.setAttribute('cy', y);
+    body.setAttribute('rx', width / 2);
+    body.setAttribute('ry', height / 2);
+    body.setAttribute('fill', fill);
+    body.setAttribute('stroke', '#999');
+    body.setAttribute('stroke-width', '1');
+    body.setAttribute('class', 'vertebra-body');
+    
+    // Add label
+    const textLabel = createSpineLabel(x - width/2 - 25, y, label, "vertebra-label");
+    
+    vertebraGroup.appendChild(body);
+    vertebraGroup.appendChild(textLabel);
+    
+    return vertebraGroup;
+}
+
+// Create a detailed disc shape
+function createDetailedDisc(x, y, width, height, fill, label) {
+    const discGroup = document.createElementNS("http://www.w3.org/2000/svg", "g");
+    discGroup.setAttribute('class', 'disc');
+    discGroup.setAttribute('data-label', label);
+    
+    // Disc body
     const disc = document.createElementNS("http://www.w3.org/2000/svg", "ellipse");
     disc.setAttribute('cx', x);
     disc.setAttribute('cy', y);
@@ -112,7 +511,164 @@ function createDisc(x, y, width, height, fill) {
     disc.setAttribute('fill', fill);
     disc.setAttribute('stroke', '#999');
     disc.setAttribute('stroke-width', '1');
-    return disc;
+    disc.setAttribute('class', 'disc-body');
+    
+    discGroup.appendChild(disc);
+    
+    return discGroup;
+}
+
+// Create text label for spine elements
+function createSpineLabel(x, y, text, className) {
+    const label = document.createElementNS("http://www.w3.org/2000/svg", "text");
+    label.setAttribute('x', x);
+    label.setAttribute('y', y);
+    label.setAttribute('text-anchor', 'start');
+    label.setAttribute('dominant-baseline', 'middle');
+    label.setAttribute('font-size', '12px');
+    label.setAttribute('fill', '#666');
+    label.setAttribute('class', className);
+    label.textContent = text;
+    
+    return label;
+}
+
+// Set up zoom controls
+function setupZoomControls() {
+    let currentScale = 1;
+    const scaleStep = 0.2;
+    const minScale = 0.6;
+    const maxScale = 2.5;
+    
+    const spineGroup = document.getElementById('spine-group');
+    const zoomIn = document.getElementById('zoom-in');
+    const zoomOut = document.getElementById('zoom-out');
+    const resetZoom = document.getElementById('reset-zoom');
+    
+    // Add event listeners for zoom buttons
+    zoomIn.addEventListener('click', function() {
+        if (currentScale < maxScale) {
+            currentScale += scaleStep;
+            updateScale();
+        }
+    });
+    
+    zoomOut.addEventListener('click', function() {
+        if (currentScale > minScale) {
+            currentScale -= scaleStep;
+            updateScale();
+        }
+    });
+    
+    resetZoom.addEventListener('click', function() {
+        currentScale = 1;
+        spineGroup.style.transform = 'translate(150px, 50px) scale(1)';
+    });
+    
+    function updateScale() {
+        spineGroup.style.transform = `translate(150px, 50px) scale(${currentScale})`;
+    }
+}
+
+// Change the spine view based on button click
+function changeSpineView(view) {
+    const spineModel = document.getElementById('spine-model-1');
+    const spineGroup = document.getElementById('spine-group');
+    const viewButtons = document.querySelectorAll('.view-btn');
+    const problemIndicators = document.querySelectorAll('.problem-indicator');
+    
+    // Remove active class from all buttons
+    viewButtons.forEach(b => b.classList.remove('active'));
+    
+    // Add active class to clicked button
+    document.querySelector(`.view-btn[data-view="${view}"]`).classList.add('active');
+    
+    switch(view) {
+        case 'front':
+            spineGroup.style.transform = `translate(150px, 50px) scale(${getCurrentScale()})`;
+            
+            // Hide problem indicators
+            problemIndicators.forEach(i => i.classList.add('hidden'));
+            break;
+            
+        case 'side':
+            spineGroup.style.transform = `translate(150px, 50px) rotateY(90deg) scale(${getCurrentScale()})`;
+            
+            // Hide problem indicators
+            problemIndicators.forEach(i => i.classList.add('hidden'));
+            break;
+            
+        case 'problem':
+            // Reset to front view first
+            spineGroup.style.transform = `translate(150px, 50px) scale(${getCurrentScale()})`;
+            
+            // Scroll to lumbar region
+            spineGroup.style.transform = `translate(150px, -290px) scale(${getCurrentScale()})`;
+            
+            // Show problem indicators
+            problemIndicators.forEach(i => i.classList.remove('hidden'));
+            
+            // Animate the problem indicators
+            animateProblemArea();
+            break;
+    }
+}
+
+// Get current scale from transform
+function getCurrentScale() {
+    const spineGroup = document.getElementById('spine-group');
+    const transform = spineGroup.style.transform;
+    const scaleMatch = transform.match(/scale\(([^)]+)\)/);
+    
+    if (scaleMatch && scaleMatch[1]) {
+        return scaleMatch[1];
+    }
+    
+    return 1;
+}
+
+// Animate the problem area highlight
+function animateProblemArea() {
+    const problemIndicators = document.querySelectorAll('.problem-indicator');
+    
+    // Fade in
+    problemIndicators.forEach(i => {
+        i.style.opacity = 0;
+        let opacity = 0;
+        const fadeIn = setInterval(() => {
+            opacity += 0.1;
+            i.style.opacity = opacity;
+            
+            if (opacity >= 1) {
+                clearInterval(fadeIn);
+                
+                // Pulse animation
+                let scale = 1;
+                let increasing = false;
+                const pulse = setInterval(() => {
+                    if (increasing) {
+                        scale += 0.01;
+                        if (scale >= 1.1) increasing = false;
+                    } else {
+                        scale -= 0.01;
+                        if (scale <= 0.9) increasing = true;
+                    }
+                    
+                    if (i.tagName === 'circle') {
+                        i.style.transform = `scale(${scale})`;
+                    }
+                }, 50);
+                
+                // Stop after a few seconds
+                setTimeout(() => {
+                    clearInterval(pulse);
+                    if (i.tagName === 'circle') {
+                        i.style.transform = 'scale(1)';
+                    }
+                }, 5000);
+            }
+        }, 50);
+    });
 }
 
 // Set up navigation between stages
@@ -242,46 +798,6 @@ function setupViewControls() {
             changeSpineView(view);
         });
     });
-}
-
-// Change the spine view based on button click
-function changeSpineView(view) {
-    const spineModel = document.getElementById('spine-model-1');
-    const svg = spineModel.querySelector('svg');
-    
-    switch(view) {
-        case 'front':
-            svg.style.transform = 'rotateY(0deg)';
-            break;
-        case 'side':
-            svg.style.transform = 'rotateY(90deg)';
-            break;
-        case 'problem':
-            // Highlight problem area
-            const vertebrae = svg.querySelectorAll('rect');
-            const discs = svg.querySelectorAll('ellipse');
-            
-            // Reset all elements
-            vertebrae.forEach(v => {
-                v.setAttribute('fill', '#e0e0e0');
-                v.setAttribute('stroke-width', '1');
-            });
-            
-            discs.forEach(d => {
-                d.setAttribute('fill', '#b3d9ff');
-                d.setAttribute('stroke-width', '1');
-            });
-            
-            // Highlight L4-L5 area
-            vertebrae[vertebrae.length - 2].setAttribute('fill', '#ff9999');
-            vertebrae[vertebrae.length - 1].setAttribute('fill', '#ff9999');
-            vertebrae[vertebrae.length - 2].setAttribute('stroke-width', '2');
-            vertebrae[vertebrae.length - 1].setAttribute('stroke-width', '2');
-            
-            discs[discs.length - 1].setAttribute('fill', '#ff6666');
-            discs[discs.length - 1].setAttribute('stroke-width', '2');
-            break;
-    }
 }
 
 // Set up healthcare team interactions
