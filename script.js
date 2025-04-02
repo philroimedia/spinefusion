@@ -589,13 +589,23 @@ function changeSpineView(view) {
             
             // Hide problem indicators
             problemIndicators.forEach(i => i.classList.add('hidden'));
+            
+            // Reset any vertebrae or disc styling
+            resetAllSpineElements();
             break;
             
         case 'side':
-            spineGroup.style.transform = `translate(150px, 50px) rotateY(90deg) scale(${getCurrentScale()})`;
+            // Instead of a full 90-degree rotation which would make the spine invisible,
+            // let's create a proper lateral view by modifying the spine components
+            
+            // First reset to front view
+            spineGroup.style.transform = `translate(150px, 50px) scale(${getCurrentScale()})`;
             
             // Hide problem indicators
             problemIndicators.forEach(i => i.classList.add('hidden'));
+            
+            // Apply side view transformations to each vertebra and disc
+            createLateralView();
             break;
             
         case 'problem':
@@ -608,10 +618,139 @@ function changeSpineView(view) {
             // Show problem indicators
             problemIndicators.forEach(i => i.classList.remove('hidden'));
             
+            // Reset any vertebrae or disc styling from lateral view
+            resetAllSpineElements();
+            
             // Animate the problem indicators
             animateProblemArea();
             break;
     }
+}
+
+// Create a lateral (side) view of the spine
+function createLateralView() {
+    // Get all vertebra bodies and processes
+    const vertebraBodies = document.querySelectorAll('.vertebra-body');
+    const vertebraProcesses = document.querySelectorAll('.vertebra-process');
+    const discs = document.querySelectorAll('.disc-body');
+    const labels = document.querySelectorAll('.vertebra-label');
+    
+    // Hide labels as they'd be in the way in lateral view
+    labels.forEach(label => {
+        label.style.opacity = '0.2';
+    });
+    
+    // For each vertebral body, adjust width to simulate side view
+    vertebraBodies.forEach(body => {
+        if (body.tagName === 'rect') {
+            // Store original width for reset
+            if (!body.hasAttribute('data-original-width')) {
+                body.setAttribute('data-original-width', body.getAttribute('width'));
+                body.setAttribute('data-original-x', body.getAttribute('x'));
+            }
+            
+            // Get the current dimensions
+            const height = parseFloat(body.getAttribute('height'));
+            const originalWidth = parseFloat(body.getAttribute('data-original-width'));
+            const originalX = parseFloat(body.getAttribute('data-original-x'));
+            
+            // Set a narrower width for side view (about 40% of original)
+            const newWidth = originalWidth * 0.4;
+            // Adjust x position to maintain center alignment
+            const newX = originalX + (originalWidth - newWidth) / 2;
+            
+            // Apply the side view transformations
+            body.setAttribute('width', newWidth);
+            body.setAttribute('x', newX);
+            
+            // Add a slight gradient to simulate lighting from the side
+            body.setAttribute('fill', 'url(#vertebraGradient)');
+            body.style.filter = 'brightness(0.9)';
+        }
+        else if (body.tagName === 'ellipse') {
+            // For elliptical vertebrae (C1, C2)
+            if (!body.hasAttribute('data-original-rx')) {
+                body.setAttribute('data-original-rx', body.getAttribute('rx'));
+            }
+            
+            const originalRx = parseFloat(body.getAttribute('data-original-rx'));
+            body.setAttribute('rx', originalRx * 0.4);
+            body.style.filter = 'brightness(0.9)';
+        }
+    });
+    
+    // Adjust the spinous processes to be more visible from the side
+    vertebraProcesses.forEach(process => {
+        if (!process.hasAttribute('data-original-d')) {
+            process.setAttribute('data-original-d', process.getAttribute('d'));
+        }
+        
+        // Make spinous processes more prominent in side view
+        // Take the original path and extend it
+        const pathData = process.getAttribute('data-original-d');
+        const newPathData = pathData.replace(/L(\d+),(\d+)/, (match, x, y) => {
+            return `L${parseInt(x) + 10},${y}`;
+        });
+        
+        process.setAttribute('d', newPathData);
+        process.style.filter = 'brightness(0.85)';
+    });
+    
+    // Adjust discs to appear narrower from the side
+    discs.forEach(disc => {
+        if (!disc.hasAttribute('data-original-rx')) {
+            disc.setAttribute('data-original-rx', disc.getAttribute('rx'));
+        }
+        
+        const originalRx = parseFloat(disc.getAttribute('data-original-rx'));
+        disc.setAttribute('rx', originalRx * 0.4);
+        disc.style.filter = 'brightness(0.9)';
+    });
+    
+    // Add a slight perspective tilt to further enhance the side view illusion
+    const spineGroup = document.getElementById('spine-group');
+    spineGroup.style.transform = `translate(150px, 50px) rotateY(15deg) scale(${getCurrentScale()})`;
+}
+
+// Reset spine elements to their original state
+function resetAllSpineElements() {
+    // Reset vertebra bodies
+    const vertebraBodies = document.querySelectorAll('.vertebra-body');
+    vertebraBodies.forEach(body => {
+        if (body.tagName === 'rect' && body.hasAttribute('data-original-width')) {
+            body.setAttribute('width', body.getAttribute('data-original-width'));
+            body.setAttribute('x', body.getAttribute('data-original-x'));
+            body.style.filter = '';
+        }
+        else if (body.tagName === 'ellipse' && body.hasAttribute('data-original-rx')) {
+            body.setAttribute('rx', body.getAttribute('data-original-rx'));
+            body.style.filter = '';
+        }
+    });
+    
+    // Reset spinous processes
+    const vertebraProcesses = document.querySelectorAll('.vertebra-process');
+    vertebraProcesses.forEach(process => {
+        if (process.hasAttribute('data-original-d')) {
+            process.setAttribute('d', process.getAttribute('data-original-d'));
+            process.style.filter = '';
+        }
+    });
+    
+    // Reset discs
+    const discs = document.querySelectorAll('.disc-body');
+    discs.forEach(disc => {
+        if (disc.hasAttribute('data-original-rx')) {
+            disc.setAttribute('rx', disc.getAttribute('data-original-rx'));
+            disc.style.filter = '';
+        }
+    });
+    
+    // Reset labels
+    const labels = document.querySelectorAll('.vertebra-label');
+    labels.forEach(label => {
+        label.style.opacity = '0.9';
+    });
 }
 
 // Get current scale from transform

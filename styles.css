@@ -332,11 +332,13 @@ header {
     max-height: 100%;
     transition: var(--transition);
     overflow: visible;
+    perspective: 1000px;
 }
 
 #spine-group {
     transition: transform 0.8s cubic-bezier(0.165, 0.84, 0.44, 1);
     transform-origin: center center;
+    transform-style: preserve-3d;
 }
 
 /* Spine components */
@@ -764,4 +766,21 @@ footer {
     display: inline-block;
     margin-right: 5px;
     font-size: 1.1rem;
+}
+
+.vertebra-body, .vertebra-process, .disc-body, .vertebra-label, .vertebra-part {
+    transition: all 0.5s ease-in-out;
+}
+
+/* Add styles for the lateral view elements */
+.lateral-view .vertebra-body {
+    transform-origin: center;
+}
+
+.lateral-view .vertebra-process {
+    transform-origin: left center;
+}
+
+.lateral-view .disc-body {
+    transform-origin: center;
 }
