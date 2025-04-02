@@ -1,0 +1,74 @@
+Spine Fusion Interactive Graphic Documentation
+Overview
+This interactive graphic provides a comprehensive visualization of the spine fusion process from initial diagnosis through full recovery. It guides users through the entire continuum of care, highlighting key stages, healthcare professionals involved, and important considerations at each step of the patient journey.
+Features
+1. Interactive Timeline Navigation
+Eight-stage timeline representing the complete patient journey
+Interactive markers for easy navigation between stages
+Visual indicators showing current position in the journey
+2. Detailed Stage Information
+Comprehensive information about each stage of the spine fusion process
+Expandable sections for additional details
+Visual representations of spine anatomy and surgical procedures
+3. Healthcare Team Visualization
+Interactive representation of healthcare professionals involved at each stage
+Role descriptions and responsibilities
+Timeline showing when different professionals are involved in care
+4. Surgical Procedure Visualization
+Detailed SVG illustrations of spine anatomy
+Interactive elements showing different surgical approaches
+Step-by-step visualization of the fusion procedure
+5. Recovery Timeline
+Visual representation of the recovery process
+Interactive milestones and progress tracking
+Activity guidelines and restrictions at different recovery phases
+6. Accessibility Features
+Keyboard navigation support
+Screen reader compatibility
+Responsive design for different screen sizes
+Technical Implementation
+Files Included
+index.html: Main HTML structure
+styles.css: CSS styling for the interactive graphic
+script.js: Core JavaScript functionality
+interactive_elements.js: Additional interactive features
+spine_fusion_anatomy.svg: SVG illustration of spine anatomy
+patient_journey_timeline.svg: SVG illustration of patient journey
+recovery_timeline.svg: SVG illustration of recovery timeline
+Technologies Used
+HTML5 for structure
+CSS3 for styling and animations
+JavaScript for interactivity
+SVG for vector graphics and illustrations
+D3.js for data visualization elements
+Browser Compatibility
+The interactive graphic has been tested and is compatible with:
+Google Chrome (latest version)
+Mozilla Firefox (latest version)
+Microsoft Edge (latest version)
+Safari (latest version)
+Usage Instructions
+Viewing the Interactive Graphic
+Extract all files from the zip archive
+Maintain the directory structure as provided
+Open index.html in a web browser
+Navigation
+Click on stage buttons at the top to navigate between stages
+Click on timeline markers to jump to specific stages
+Use expandable sections to view additional information
+Click on healthcare team members to see role descriptions
+Interactive Elements
+Use view controls to change perspective of spine models
+Click through surgical approach options to see different techniques
+Interact with recovery milestones to track progress
+Use zoom and pan controls to examine spine anatomy in detail
+Medical Information Sources
+The content in this interactive graphic is based on comprehensive research from authoritative medical sources including:
+Mayo Clinic
+American Academy of Orthopaedic Surgeons (AAOS)
+National Association of Orthopaedic Nurses (NAON)
+Peer-reviewed medical literature
+Customization
+The interactive graphic can be customized by modifying the HTML, CSS, and JavaScript files. The modular structure allows for easy updates to content, styling, and functionality.
+Support
+For any questions or issues regarding the interactive graphic, please contact the development team.

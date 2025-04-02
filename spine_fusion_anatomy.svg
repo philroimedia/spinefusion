@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="200" height="600" viewBox="0 0 200 600">
+  <!-- Spine Anatomy SVG for Stage 3: Surgical Procedure -->
+  
+  <!-- Background elements -->
+  <rect x="0" y="0" width="200" height="600" fill="#f8f9fa" />
+  
+  <!-- Lumbar vertebrae (L1-L5) -->
+  <!-- L1 -->
+  <g id="L1">
+    <rect x="70" y="100" width="60" height="20" rx="3" fill="#e0e0e0" stroke="#999" stroke-width="1" />
+    <text x="100" y="114" font-size="10" text-anchor="middle" fill="#666">L1</text>
+  </g>
+  
+  <!-- L1-L2 Disc -->
+  <ellipse cx="100" cy="130" rx="25" ry="5" fill="#b3d9ff" stroke="#999" stroke-width="1" />
+  
+  <!-- L2 -->
+  <g id="L2">
+    <rect x="70" y="150" width="60" height="20" rx="3" fill="#e0e0e0" stroke="#999" stroke-width="1" />
+    <text x="100" y="164" font-size="10" text-anchor="middle" fill="#666">L2</text>
+  </g>
+  
+  <!-- L2-L3 Disc -->
+  <ellipse cx="100" cy="180" rx="25" ry="5" fill="#b3d9ff" stroke="#999" stroke-width="1" />
+  
+  <!-- L3 -->
+  <g id="L3">
+    <rect x="70" y="200" width="60" height="20" rx="3" fill="#e0e0e0" stroke="#999" stroke-width="1" />
+    <text x="100" y="214" font-size="10" text-anchor="middle" fill="#666">L3</text>
+  </g>
+  
+  <!-- L3-L4 Disc -->
+  <ellipse cx="100" cy="230" rx="25" ry="5" fill="#b3d9ff" stroke="#999" stroke-width="1" />
+  
+  <!-- L4 - Highlighted as surgical area -->
+  <g id="L4">
+    <rect x="70" y="250" width="60" height="20" rx="3" fill="#ffcccc" stroke="#cc0000" stroke-width="1.5" />
+    <text x="100" y="264" font-size="10" text-anchor="middle" fill="#666">L4</text>
+  </g>
+  
+  <!-- L4-L5 Disc - Damaged/Problematic -->
+  <ellipse cx="100" cy="280" rx="25" ry="5" fill="#ff6666" stroke="#cc0000" stroke-width="1.5" />
+  
+  <!-- L5 - Highlighted as surgical area -->
+  <g id="L5">
+    <rect x="70" y="300" width="60" height="20" rx="3" fill="#ffcccc" stroke="#cc0000" stroke-width="1.5" />
+    <text x="100" y="314" font-size="10" text-anchor="middle" fill="#666">L5</text>
+  </g>
+  
+  <!-- L5-S1 Disc -->
+  <ellipse cx="100" cy="330" rx="25" ry="5" fill="#b3d9ff" stroke="#999" stroke-width="1" />
+  
+  <!-- Sacrum -->
+  <path d="M70,340 L130,340 L120,390 L80,390 Z" fill="#e0e0e0" stroke="#999" stroke-width="1" />
+  <text x="100" y="370" font-size="10" text-anchor="middle" fill="#666">Sacrum</text>
+  
+  <!-- Surgical Hardware Illustration -->
+  <!-- Pedicle screws in L4 -->
+  <circle cx="75" cy="250" r="5" fill="#c0c0c0" stroke="#666" stroke-width="1" />
+  <circle cx="125" cy="250" r="5" fill="#c0c0c0" stroke="#666" stroke-width="1" />
+  
+  <!-- Pedicle screws in L5 -->
+  <circle cx="75" cy="300" r="5" fill="#c0c0c0" stroke="#666" stroke-width="1" />
+  <circle cx="125" cy="300" r="5" fill="#c0c0c0" stroke="#666" stroke-width="1" />
+  
+  <!-- Rods connecting screws -->
+  <line x1="75" y1="250" x2="75" y2="300" stroke="#c0c0c0" stroke-width="3" />
+  <line x1="125" y1="250" x2="125" y2="300" stroke="#c0c0c0" stroke-width="3" />
+  
+  <!-- Interbody cage/graft -->
+  <rect x="85" y="280" width="30" height="10" fill="#d9d9d9" stroke="#666" stroke-width="1" />
+  
+  <!-- Labels -->
+  <text x="50" y="250" font-size="8" text-anchor="end" fill="#333">Pedicle Screw</text>
+  <line x1="52" y1="250" x2="70" y2="250" stroke="#333" stroke-width="0.5" />
+  
+  <text x="150" y="275" font-size="8" text-anchor="start" fill="#333">Connecting Rod</text>
+  <line x1="148" y1="275" x2="125" y2="275" stroke="#333" stroke-width="0.5" />
+  
+  <text x="100" y="260" font-size="8" text-anchor="middle" fill="#333">Interbody Cage</text>
+  <line x1="100" y1="262" x2="100" y2="275" stroke="#333" stroke-width="0.5" />
+  
+  <!-- Title -->
+  <text x="100" y="50" font-size="14" font-weight="bold" text-anchor="middle" fill="#333">Lumbar Spinal Fusion</text>
+  <text x="100" y="70" font-size="10" text-anchor="middle" fill="#666">L4-L5 Fusion with Pedicle Screws</text>
+</svg>

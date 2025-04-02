@@ -1,0 +1,623 @@
+/* Main Styles for Spine Fusion Interactive Graphic */
+
+/* Base Styles and Typography */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+:root {
+    --primary-color: #0056b3;
+    --secondary-color: #3498db;
+    --accent-color: #2ecc71;
+    --text-color: #333;
+    --light-bg: #f8f9fa;
+    --dark-bg: #2c3e50;
+    --border-radius: 8px;
+    --box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    --transition: all 0.3s ease;
+    --progress-width: 0%;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.6;
+    color: var(--text-color);
+    background-color: var(--light-bg);
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Animation setup for page load */
+header, 
+.journey-nav, 
+.timeline-container, 
+.content-container {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-weight: 600;
+    margin-bottom: 1rem;
+    color: var(--dark-bg);
+}
+
+h1 {
+    font-size: 2.5rem;
+    text-align: center;
+    margin-bottom: 0.5rem;
+}
+
+h2 {
+    font-size: 2rem;
+    border-bottom: 2px solid var(--secondary-color);
+    padding-bottom: 0.5rem;
+    margin-bottom: 1.5rem;
+}
+
+h3 {
+    font-size: 1.5rem;
+    color: var(--primary-color);
+}
+
+h4 {
+    font-size: 1.2rem;
+    color: var(--secondary-color);
+}
+
+p {
+    margin-bottom: 1rem;
+}
+
+ul, ol {
+    margin-left: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.subtitle {
+    text-align: center;
+    font-size: 1.2rem;
+    color: #7f8c8d;
+    margin-bottom: 0.5rem;
+}
+
+/* Header and Navigation */
+header {
+    margin-bottom: 2rem;
+    padding: 1.5rem;
+    background-color: #fff;
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.logo-container {
+    flex: 0 0 250px;
+    text-align: center;
+    margin-right: 2rem;
+}
+
+.logo {
+    max-width: 100%;
+    height: auto;
+}
+
+.header-text {
+    flex: 1;
+    min-width: 300px;
+}
+
+.journey-nav {
+    margin-bottom: 2rem;
+    overflow-x: auto;
+    background-color: #fff;
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    position: sticky;
+    top: 20px;
+    z-index: 100;
+}
+
+.journey-nav ul {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.journey-nav li {
+    flex: 1;
+    text-align: center;
+    white-space: nowrap;
+}
+
+.stage-btn {
+    width: 100%;
+    padding: 1.2rem 0.5rem;
+    background: none;
+    border: none;
+    border-bottom: 3px solid transparent;
+    cursor: pointer;
+    font-weight: 500;
+    transition: var(--transition);
+    font-size: 0.9rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.stage-btn::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 3px;
+    background-color: var(--primary-color);
+    transition: var(--transition);
+}
+
+.stage-btn:hover {
+    background-color: rgba(52, 152, 219, 0.1);
+    color: var(--primary-color);
+}
+
+.stage-btn:hover::before {
+    width: 100%;
+}
+
+.stage-btn.active {
+    border-bottom-color: var(--primary-color);
+    color: var(--primary-color);
+    background-color: rgba(52, 152, 219, 0.15);
+    font-weight: 600;
+}
+
+.stage-btn.active::before {
+    width: 100%;
+}
+
+/* Timeline */
+.timeline-container {
+    margin-bottom: 2rem;
+    padding: 1.5rem;
+    background-color: #fff;
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+}
+
+.timeline {
+    position: relative;
+    height: 8px;
+    background-color: #e0e0e0;
+    border-radius: 4px;
+    margin: 2.5rem 0;
+    display: flex;
+    justify-content: space-between;
+}
+
+.timeline::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+    border-radius: 4px;
+    width: var(--progress-width);
+    transition: width 0.5s ease;
+}
+
+.timeline-marker {
+    position: absolute;
+    width: 24px;
+    height: 24px;
+    background-color: #fff;
+    border: 2px solid #bdc3c7;
+    border-radius: 50%;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    transition: var(--transition);
+    z-index: 2;
+}
+
+.timeline-marker::after {
+    content: attr(data-stage);
+    position: absolute;
+    top: -35px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: #7f8c8d;
+    white-space: nowrap;
+}
+
+.timeline-marker:hover {
+    background-color: var(--secondary-color);
+    border-color: var(--secondary-color);
+    transform: translateY(-50%) scale(1.2);
+}
+
+.timeline-marker.active {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 4px rgba(41, 128, 185, 0.3);
+}
+
+#marker-1 { left: 0%; }
+#marker-2 { left: 14.28%; }
+#marker-3 { left: 28.57%; }
+#marker-4 { left: 42.85%; }
+#marker-5 { left: 57.14%; }
+#marker-6 { left: 71.42%; }
+#marker-7 { left: 85.71%; }
+#marker-8 { left: 100%; }
+
+/* Content Sections */
+.content-container {
+    background-color: #fff;
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    padding: 2.5rem;
+    min-height: 600px;
+    transition: var(--transition);
+}
+
+.stage-content {
+    display: none;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.stage-content.active {
+    display: block;
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.stage-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto auto;
+    gap: 2.5rem;
+    margin-top: 2.5rem;
+}
+
+/* Spine Visualization */
+.spine-visualization {
+    grid-column: 1;
+    grid-row: 1 / span 2;
+    background-color: #f8f9fa;
+    border-radius: var(--border-radius);
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 450px;
+    transition: var(--transition);
+    box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.05);
+    border: 1px solid #e5e5e5;
+}
+
+.spine-visualization:hover {
+    box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.08);
+}
+
+.spine-model {
+    width: 100%;
+    height: 350px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+    position: relative;
+    transition: var(--transition);
+}
+
+.spine-model svg {
+    max-width: 100%;
+    max-height: 100%;
+    transition: var(--transition);
+}
+
+.controls {
+    display: flex;
+    gap: 0.8rem;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.view-btn {
+    padding: 0.6rem 1.2rem;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: var(--transition);
+    font-weight: 500;
+    font-size: 0.9rem;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+.view-btn:hover {
+    background-color: #f0f7ff;
+    border-color: var(--secondary-color);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.view-btn.active {
+    background-color: var(--primary-color);
+    color: white;
+    border-color: var(--primary-color);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.view-btn:active {
+    transform: translateY(1px);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Information Panels */
+.info-panel {
+    background-color: #fff;
+    border-radius: var(--border-radius);
+    padding: 1.5rem;
+    border: 1px solid #e5e5e5;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    transition: var(--transition);
+}
+
+.info-panel:hover {
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+    transform: translateY(-2px);
+}
+
+.expandable-section {
+    margin: 1rem 0;
+    border: 1px solid #e0e0e0;
+    border-radius: var(--border-radius);
+    overflow: hidden;
+    transition: var(--transition);
+}
+
+.expandable-section:hover {
+    border-color: var(--secondary-color);
+}
+
+.expandable-header {
+    padding: 0.8rem;
+    background-color: #f8f9fa;
+    cursor: pointer;
+    position: relative;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    transition: var(--transition);
+}
+
+.expandable-header:hover {
+    background-color: #f0f7ff;
+}
+
+.expandable-header::after {
+    content: '+';
+    position: absolute;
+    right: 1rem;
+    transition: var(--transition);
+}
+
+.expandable-section.open .expandable-header::after {
+    content: '−';
+}
+
+.expandable-content {
+    max-height: 0;
+    overflow: hidden;
+    padding: 0 1rem;
+    transition: max-height 0.3s ease, padding 0.3s ease;
+}
+
+.expandable-section.open .expandable-content {
+    max-height: 500px;
+    padding: 1rem;
+}
+
+/* Healthcare Team */
+.healthcare-team {
+    grid-column: 2;
+    grid-row: 2;
+    background-color: #fff;
+    border-radius: var(--border-radius);
+    padding: 1.5rem;
+    border: 1px solid #e5e5e5;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    transition: var(--transition);
+}
+
+.healthcare-team:hover {
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+    transform: translateY(-2px);
+}
+
+.team-members {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.team-member {
+    flex: 1 1 calc(50% - 1rem);
+    min-width: 120px;
+    background-color: rgba(52, 152, 219, 0.05);
+    border-radius: var(--border-radius);
+    padding: 1rem;
+    text-align: center;
+    cursor: pointer;
+    transition: var(--transition);
+    border: 1px solid rgba(52, 152, 219, 0.1);
+    position: relative;
+    overflow: hidden;
+}
+
+.team-member::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0%;
+    height: 3px;
+    background-color: var(--primary-color);
+    transition: var(--transition);
+}
+
+.team-member:hover {
+    background-color: rgba(52, 152, 219, 0.1);
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+}
+
+.team-member:hover::before {
+    width: 100%;
+}
+
+.member-icon {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+}
+
+.member-title {
+    font-weight: 500;
+    font-size: 0.9rem;
+}
+
+/* Footer */
+footer {
+    margin-top: 3rem;
+    padding: 2rem;
+    background-color: #fff;
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+}
+
+.footer-container {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 2rem;
+}
+
+.footer-logo {
+    flex: 0 0 200px;
+}
+
+.footer-logo-img {
+    max-width: 100%;
+    height: auto;
+}
+
+.footer-content {
+    flex: 1;
+    min-width: 300px;
+}
+
+.footer-content p {
+    margin-bottom: 0.5rem;
+    font-size: 0.9rem;
+    color: #666;
+}
+
+.footer-content p:last-child {
+    font-weight: 500;
+}
+
+/* Responsive Design */
+@media (max-width: 992px) {
+    .stage-grid {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto auto auto;
+    }
+    
+    .spine-visualization {
+        grid-column: 1;
+        grid-row: 1;
+    }
+    
+    .info-panel {
+        grid-column: 1;
+        grid-row: 2;
+    }
+    
+    .healthcare-team {
+        grid-column: 1;
+        grid-row: 3;
+    }
+}
+
+@media (max-width: 768px) {
+    body {
+        padding: 10px;
+    }
+    
+    h1 {
+        font-size: 2rem;
+    }
+    
+    h2 {
+        font-size: 1.5rem;
+    }
+    
+    .journey-nav {
+        overflow-x: auto;
+    }
+    
+    .stage-btn {
+        padding: 0.75rem 0.25rem;
+        font-size: 0.8rem;
+    }
+    
+    .content-container {
+        padding: 1rem;
+    }
+    
+    .team-member {
+        width: 100%;
+    }
+}
+
+/* Accessibility */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        transition: none !important;
+        animation: none !important;
+    }
+}
+
+/* High Contrast Mode */
+@media (prefers-contrast: high) {
+    body {
+        color: black;
+        background-color: white;
+    }
+    
+    .stage-btn.active {
+        background-color: black;
+        color: white;
+        border-bottom-color: white;
+    }
+    
+    .timeline-marker.active {
+        background-color: black;
+        box-shadow: 0 0 0 4px rgba(0, 0, 0, 0.5);
+    }
+}

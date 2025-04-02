@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Legent Spine: Fusion Interactive Guide</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+</head>
+<body>
+    <header>
+        <div class="logo-container">
+            <img src="legent-spine-logo.png" alt="Legent Spine Logo" class="logo">
+        </div>
+        <div class="header-text">
+            <h1>Spine Fusion: The Complete Patient Journey</h1>
+            <p class="subtitle">An interactive guide from diagnosis to full recovery</p>
+        </div>
+    </header>
+
+    <nav class="journey-nav">
+        <ul>
+            <li><button class="stage-btn active" data-stage="1">Diagnosis</button></li>
+            <li><button class="stage-btn" data-stage="2">Preparation</button></li>
+            <li><button class="stage-btn" data-stage="3">Surgery</button></li>
+            <li><button class="stage-btn" data-stage="4">Hospital Recovery</button></li>
+            <li><button class="stage-btn" data-stage="5">Early Recovery</button></li>
+            <li><button class="stage-btn" data-stage="6">Intermediate Recovery</button></li>
+            <li><button class="stage-btn" data-stage="7">Advanced Recovery</button></li>
+            <li><button class="stage-btn" data-stage="8">Long-term Maintenance</button></li>
+        </ul>
+    </nav>
+
+    <main>
+        <div class="timeline-container">
+            <div class="timeline">
+                <div class="timeline-marker" id="marker-1" data-stage="1"></div>
+                <div class="timeline-marker" id="marker-2" data-stage="2"></div>
+                <div class="timeline-marker" id="marker-3" data-stage="3"></div>
+                <div class="timeline-marker" id="marker-4" data-stage="4"></div>
+                <div class="timeline-marker" id="marker-5" data-stage="5"></div>
+                <div class="timeline-marker" id="marker-6" data-stage="6"></div>
+                <div class="timeline-marker" id="marker-7" data-stage="7"></div>
+                <div class="timeline-marker" id="marker-8" data-stage="8"></div>
+            </div>
+        </div>
+
+        <div class="content-container">
+            <div class="stage-content active" id="stage-1">
+                <h2>Stage 1: Initial Diagnosis and Decision-Making</h2>
+                <div class="stage-grid">
+                    <div class="spine-visualization">
+                        <div class="spine-model" id="spine-model-1">
+                            <!-- SVG spine model will be inserted here -->
+                        </div>
+                        <div class="controls">
+                            <button class="view-btn" data-view="front">Front View</button>
+                            <button class="view-btn" data-view="side">Side View</button>
+                            <button class="view-btn" data-view="problem">Show Problem Area</button>
+                        </div>
+                    </div>
+                    <div class="info-panel">
+                        <h3>About This Stage</h3>
+                        <p>The journey begins with identifying the spinal condition that may require fusion. This typically involves:</p>
+                        <ul>
+                            <li>Initial consultation with primary care physician or specialist</li>
+                            <li>Diagnostic imaging (X-rays, MRI, CT scans)</li>
+                            <li>Conservative treatment attempts</li>
+                            <li>Specialist referrals</li>
+                            <li>Surgical consultation and decision-making</li>
+                        </ul>
+                        <div class="expandable-section">
+                            <h4 class="expandable-header">Common Conditions Leading to Fusion</h4>
+                            <div class="expandable-content">
+                                <ul>
+                                    <li>Degenerative disk disease</li>
+                                    <li>Spinal stenosis</li>
+                                    <li>Spondylolisthesis</li>
+                                    <li>Scoliosis</li>
+                                    <li>Fractures</li>
+                                    <li>Tumors</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="expandable-section">
+                            <h4 class="expandable-header">Diagnostic Process</h4>
+                            <div class="expandable-content">
+                                <p>Diagnosis typically involves physical examination and imaging studies:</p>
+                                <ul>
+                                    <li><strong>X-rays:</strong> Show bone alignment and can reveal fractures, tumors, or deformities</li>
+                                    <li><strong>MRI:</strong> Provides detailed images of soft tissues including discs, nerves, and spinal cord</li>
+                                    <li><strong>CT scan:</strong> Offers detailed bone imaging and can help plan surgical approaches</li>
+                                    <li><strong>Myelogram:</strong> Special X-ray or CT scan after dye injection to highlight spinal cord and nerve compression</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="healthcare-team">
+                        <h3>Healthcare Team</h3>
+                        <div class="team-members">
+                            <div class="team-member" data-role="primary-care">
+                                <div class="member-icon">👨‍⚕️</div>
+                                <div class="member-title">Primary Care Physician</div>
+                            </div>
+                            <div class="team-member" data-role="neurologist">
+                                <div class="member-icon">👩‍⚕️</div>
+                                <div class="member-title">Neurologist</div>
+                            </div>
+                            <div class="team-member" data-role="spine-surgeon">
+                                <div class="member-icon">👨‍⚕️</div>
+                                <div class="member-title">Spine Surgeon</div>
+                            </div>
+                            <div class="team-member" data-role="radiologist">
+                                <div class="member-icon">👩‍⚕️</div>
+                                <div class="member-title">Radiologist</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Template for other stages - will be populated by JavaScript -->
+            <div class="stage-content" id="stage-2">
+                <h2>Stage 2: Preoperative Preparation</h2>
+                <!-- Content will be loaded dynamically -->
+            </div>
+            
+            <div class="stage-content" id="stage-3">
+                <h2>Stage 3: Surgical Procedure</h2>
+                <!-- Content will be loaded dynamically -->
+            </div>
+            
+            <div class="stage-content" id="stage-4">
+                <h2>Stage 4: Hospital Recovery</h2>
+                <!-- Content will be loaded dynamically -->
+            </div>
+            
+            <div class="stage-content" id="stage-5">
+                <h2>Stage 5: Early Home Recovery (Weeks 1-4)</h2>
+                <!-- Content will be loaded dynamically -->
+            </div>
+            
+            <div class="stage-content" id="stage-6">
+                <h2>Stage 6: Intermediate Recovery (Weeks 5-9)</h2>
+                <!-- Content will be loaded dynamically -->
+            </div>
+            
+            <div class="stage-content" id="stage-7">
+                <h2>Stage 7: Advanced Recovery (Weeks 10-24)</h2>
+                <!-- Content will be loaded dynamically -->
+            </div>
+            
+            <div class="stage-content" id="stage-8">
+                <h2>Stage 8: Long-term Recovery and Maintenance</h2>
+                <!-- Content will be loaded dynamically -->
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-container">
+            <div class="footer-logo">
+                <img src="legent-spine-logo.png" alt="Legent Spine Logo" class="footer-logo-img">
+            </div>
+            <div class="footer-content">
+                <p>This interactive guide is provided by Legent Spine. Information is based on comprehensive research from authoritative medical sources including Mayo Clinic, American Academy of Orthopaedic Surgeons (AAOS), and peer-reviewed literature.</p>
+                <p>&copy; 2025 Legent Spine | All Rights Reserved</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script src="interactive_elements.js"></script>
+</body>
+</html>
